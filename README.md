@@ -1,10 +1,9 @@
 <div align="center">
 
-# Template Repo for `React + Typescript + Vite + Redux + Saga + Semi UI + Iconsax`
+# React Typescript Boilerplate 
 
 <p>
 
-![React](https://img.shields.io/badge/-React%20^17.0.0-282c34?logo=react)
 ![Vite](https://img.shields.io/badge/-Vite%20^2.6.4-646cff?logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript%20^4.3.2-blue?logo=typescript&logoColor=white)
 ![Redux](https://img.shields.io/badge/-Redux%20^4.1.2-white?logo=redux&logoColor=646cff)
@@ -23,6 +22,15 @@
 This is a template repo for projects built with `react` and `typescript` on the basis of `vite`.
 
 This template also uses Protected Route plus Authentication and Public Route in ReactJS, and applies Redux and Redux-Saga for React Web App.
+
+## Dependencies
+**Libraries**:
+- React & Typescript
+- Redux
+- Redux Saga
+
+**Tooling**: Vite  
+**UI Kit**: Semi Design, Iconsax
 
 ## Development
 
