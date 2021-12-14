@@ -77,7 +77,7 @@ In this project, you can run the following scripts:
 
 ## Credits
 
-Vite Template React is built and maintained by [Necrobits](https://necrobits.github.io/).
+The repository is built and maintained by [Necrobits](https://necrobits.github.io/).
 
 ## License
 
