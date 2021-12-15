@@ -27,7 +27,6 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-
   // access token expired
   // if(error.response.status === 401 && error.config._retry) {
   //   error.config._retry = true;

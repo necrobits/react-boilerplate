@@ -1,6 +1,6 @@
 <div align="center">
 
-# React Typescript Boilerplate 
+# React Typescript Boilerplate
 
 <p>
 
@@ -15,16 +15,16 @@
 
 </div>
 
-
 ## Introduction
-
 
 This is a template repo for projects built with `react` and `typescript` on the basis of `vite`.
 
 This template also uses Protected Route plus Authentication and Public Route in ReactJS, and applies Redux and Redux-Saga for React Web App.
 
 ## Dependencies
+
 **Libraries**:
+
 - React & Typescript
 - Redux
 - Redux Saga
@@ -49,7 +49,6 @@ git add .
 git commit -m "Initial commit"
 ```
 
-
 Install dependencies:
 
 ```
@@ -69,7 +68,7 @@ And then open http://localhost:3000 to view it in the browser.
 In this project, you can run the following scripts:
 
 | Script        | Description                                          |
-| ------------- |------------------------------------------------------|
+| ------------- | ---------------------------------------------------- |
 | npm run dev   | Runs the app in the development mode.                |
 | npm run build | Builds the app for production to the `build` folder. |
 | npm run serve | Serves the production build from the `build` folder. |
