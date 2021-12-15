@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useCallback, FC } from 'react';
+import React, { useState, FC } from 'react';
 
 // libs
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary';
 
-import { Button, Toast } from '@douyinfe/semi-ui';
-import { Modal } from '@douyinfe/semi-ui';
-import { LStorage } from '~/storage/storage';
-import { ERROR_LOG } from '~/constants/storage';
-import { string } from 'prop-types';
+import { Toast } from '@douyinfe/semi-ui';
 
 const DefaultPage: FC = ({ children }) => {
   const [boundaryKey, setBoundaryKey] = useState(0);

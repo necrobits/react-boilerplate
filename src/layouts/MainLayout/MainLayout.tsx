@@ -1,12 +1,13 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { Layout } from '@douyinfe/semi-ui';
 
 import ErrorBoundary from '~/containers/ErrorBoundary';
 
 // components
 import NavBar from './NavBar';
+import { Outlet } from 'react-router-dom';
 
-const MainLayout: FC = ({ children }) => {
+const MainLayout = () => {
   const { Header, Content } = Layout;
   return (
     <Layout style={{ border: '1px solid var(--semi-color-border)' }}>
@@ -21,7 +22,9 @@ const MainLayout: FC = ({ children }) => {
           height: 'calc(100vh - 80px)',
           overflowY: 'scroll'
         }}>
-        <ErrorBoundary>{children}</ErrorBoundary>
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
       </Content>
     </Layout>
   );

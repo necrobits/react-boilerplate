@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import '~/App.scss';
 import MainRoutes from '~/routes/MainRoutes';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
-  return <MainRoutes />;
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<div />}>
+        <MainRoutes />
+      </Suspense>
+    </BrowserRouter>
+  );
 }
 
 export default App;
