@@ -20,5 +20,3 @@ export interface AuthenticatedUser {
   Roles: string[];
   Token: string;
 }
-
-
