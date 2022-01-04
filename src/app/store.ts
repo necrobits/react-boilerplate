@@ -1,23 +1,26 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose, Reducer } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { reducer as UserReducer } from '~/features/users/users.slice';
-import { reducer as AuthReducer } from '~/features/auth/auth.slice';
-
 import saga from '~/app/saga';
-import AppState from '~/models/app.model';
+import { AppState } from '~/models';
 
 declare global {
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
+const authReducer: Reducer = (state = {}, action) => {
+  switch (action.type) {
+    default: {
+      return state;
+    }
+  }
+};
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const reducers = combineReducers<AppState>({
-  users: UserReducer,
-  auth: AuthReducer
+  auth: authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

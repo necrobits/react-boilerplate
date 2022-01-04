@@ -2,17 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '~/index.scss';
 import App from '~/App';
-import httpService from '~/services/httpService';
-import { setupInterceptorsTo } from '~/middlewares/httpInterceptors';
 import { store } from '~/app/store';
 import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { AuthProvider } from './app/auth';
+import go from '~/app/gobits';
+import { simpleAuth } from '~/middlewares';
 
-setupInterceptorsTo(httpService.instance);
+const queryClient = new QueryClient();
+
+go.use(simpleAuth);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </QueryClientProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

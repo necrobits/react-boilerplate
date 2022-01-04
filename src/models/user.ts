@@ -1,4 +1,4 @@
-export interface UserModel {
+export interface User {
   id: number;
   email: string;
   name: string;
@@ -9,7 +9,7 @@ export interface UserModel {
 
 export interface UsersState {
   loading: boolean;
-  items: UserModel[];
+  items: User[];
   errors?: string;
 }
 
@@ -21,10 +21,4 @@ export interface AuthenticatedUser {
   Token: string;
 }
 
-export interface UsersFetchInput {
-  page: number;
-}
 
-export interface UsersResponse {
-  data: UserModel[];
-}

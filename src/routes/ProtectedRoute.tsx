@@ -1,12 +1,10 @@
 import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-
-import { useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router-dom';
 import _ from 'lodash';
 import Forbidden from '~/components/Forbidden/Forbidden';
-import { getAuthenticatedUser, isLoggedIn } from '~/features/auth/auth.selector';
-import { LStorage } from '~/storage/storage';
-import { AUTH_TOKEN } from '~/constants/storage';
+import { LStorage } from '~/storage';
+import { AUTH_TOKEN } from '~/constants';
+import { useAuth } from '~/app/auth';
 
 type Props = {
   component: React.ComponentType;
@@ -19,14 +17,18 @@ const ProtectedRoute: React.FC<Props> = ({
   redirectPath = '/login',
   requireRoles = []
 }: Props) => {
-  const loggedIn = useSelector(isLoggedIn) || !!LStorage.getItem(AUTH_TOKEN);
+  const auth = useAuth();
+
+  const { user } = auth;
+  const isLoggedIn = auth.isLoggedIn || !!LStorage.getItem(AUTH_TOKEN);
+
+  // const loggedIn = useSelector(isLoggedIn) || !!LStorage.getItem(AUTH_TOKEN);
   const location = useLocation();
 
-  const user = useSelector(getAuthenticatedUser);
   const routeRoles = requireRoles.map(role => role.toLowerCase());
   const userRoles = (user?.Roles ?? []).map(role => role.toLowerCase());
 
-  if (!loggedIn) {
+  if (!isLoggedIn) {
     return <Navigate to={redirectPath} state={{ referrer: location }} />;
   }
 

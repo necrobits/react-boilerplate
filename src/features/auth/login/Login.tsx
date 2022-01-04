@@ -1,40 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Spin } from '@douyinfe/semi-ui';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { authLoginActions } from '~/features/auth/auth.action';
-import { getAuthErrors, isAuthing } from '~/features/auth/auth.selector';
 import ErrorMessage from '@douyinfe/semi-ui/lib/es/form/errorMessage';
-import { useAppDispatch } from '~/app/hook';
-import AppState from '~/models/app.model';
+import { useAuth } from '~/app/auth';
 
 export default function Login() {
-  const dispatch = useAppDispatch();
-
-  // selector
-  const loading = useSelector(isAuthing);
-
-  // local state
-  const [submitted, setSubmitted] = useState(false);
-  const error = useSelector<AppState, string | undefined>((state: AppState) =>
-    getAuthErrors(state, submitted)
-  );
+  const { isLoggingIn, login, error } = useAuth();
 
   const onSubmit = (values: Record<string, any>) => {
     const { email, password } = values;
-    dispatch(authLoginActions.request({ email, password }));
-    setTimeout(() => setSubmitted(true), 500);
+    login({ email, password });
   };
 
   return (
-    <Spin spinning={loading}>
-      <Form
-        onSubmit={onSubmit}
-        style={{ width: 400 }}
-        onValueChange={() => setSubmitted(false)}>
+    <Spin spinning={isLoggingIn}>
+      <Form onSubmit={onSubmit} style={{ width: 400 }}>
         {({ values, formState }) => (
           <>
-            {error && <ErrorMessage error={error} />}
+            {!!error && <ErrorMessage error={error} />}
             <Form.Input
               field='email'
               label='Email'

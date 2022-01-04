@@ -1,4 +1,4 @@
-import { STORAGE_NAME } from '~/constants/storage';
+import { STORAGE_NAME } from '~/constants';
 
 class AppStorage {
   private readonly storage: Storage;

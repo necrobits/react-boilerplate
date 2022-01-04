@@ -1,9 +1,6 @@
 import React, { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
-// types
-import { IRoutes } from '~/models/routes.model';
-
 // layouts
 import MainLayout from '~/layouts/MainLayout';
 
@@ -15,6 +12,18 @@ const Users = lazy(() => import('~/views/Users'));
 const Login = lazy(() => import('~/views/Login'));
 const Signup = lazy(() => import('~/views/Signup'));
 const Example = lazy(() => import('~/views/Example'));
+
+type Route = {
+  exact?: boolean;
+  path?: string;
+  guard?: any;
+  component?: any;
+  requireRoles?: string[] | [];
+};
+
+export type IRoutes = Route & {
+  routes?: Route[];
+};
 
 export const routes: IRoutes[] = [
   {

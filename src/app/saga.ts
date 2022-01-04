@@ -1,23 +1,17 @@
 import { put, call, all } from 'redux-saga/effects';
 import { ApiAction } from '~/actions';
-import httpService from '~/services/httpService';
-import auth from '~/features/auth/auth.saga';
-import users from '~/features/users/users.saga';
 
-import { IConfig } from '~/services/httpInstance';
+import go from '~/app/gobits';
 
 export interface RequestInput {
   url: string;
-  opts: IConfig;
+  opts: any;
 }
 
-// reusable fetch Subroutine
-// entity :  user | repo | starred | stargazers
-// action  : RequestInput
 export function* fetchEntity<T, N>(entity: ApiAction<T, N>, input: RequestInput) {
   const { url, opts } = input;
   try {
-    const response: T = yield call(httpService.get.bind(httpService), url, opts);
+    const response: T = yield call(go.get.bind(go), url, opts);
     if (response) {
       yield put(entity.success(response));
     }
@@ -27,5 +21,5 @@ export function* fetchEntity<T, N>(entity: ApiAction<T, N>, input: RequestInput)
 }
 
 export default function* rootSaga() {
-  yield all([...auth, ...users]);
+  yield all([]);
 }

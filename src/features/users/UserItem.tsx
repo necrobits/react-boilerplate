@@ -10,10 +10,10 @@ import {
 } from '@douyinfe/semi-ui';
 import { parseISO, format } from 'date-fns';
 
-import { UserModel } from '~/models/user.model';
+import { User } from '~/models/user';
 import './Useritem.scss';
 
-type Props = UserModel & {
+type Props = User & {
   loading: boolean;
 };
 

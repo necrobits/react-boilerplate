@@ -1,0 +1,1 @@
+export { simpleAuth } from './simpleAuth';

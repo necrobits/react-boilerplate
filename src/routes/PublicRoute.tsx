@@ -1,10 +1,9 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import { isLoggedIn } from '~/features/auth/auth.selector';
-import { LStorage } from '~/storage/storage';
-import { AUTH_TOKEN } from '~/constants/storage';
+import { useAuth } from '~/app/auth';
+import { AUTH_TOKEN } from '~/constants';
+import { LStorage } from '~/storage';
 
 type Props = {
   component: React.ComponentType;
@@ -13,10 +12,12 @@ type Props = {
 };
 
 const PublicRoute = ({ component: RouteComponent }: Props) => {
-  const loggedIn = useSelector(isLoggedIn) || !!LStorage.getItem(AUTH_TOKEN);
+  const isLoggedIn = useAuth().isLoggedIn || !!LStorage.getItem(AUTH_TOKEN);
+
+  // const loggedIn = useSelector(isLoggedIn) || !!LStorage.getItem(AUTH_TOKEN);
   const location = useLocation();
 
-  if (loggedIn) {
+  if (isLoggedIn) {
     if (location.state?.referrer) {
       const to = {
         pathname: location.state.referrer.pathname,
