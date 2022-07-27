@@ -1,77 +1,66 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Avatar,
-  Button,
-  ButtonGroup,
-  List,
-  Typography,
-  Descriptions,
-  Skeleton
-} from '@douyinfe/semi-ui';
-import { parseISO, format } from 'date-fns';
+import { Avatar, Button, ButtonGroup, Descriptions, List, Skeleton, Typography } from '@douyinfe/semi-ui';
+import { format, parseISO } from 'date-fns';
 
 import { User } from '~/models/user';
 import './Useritem.scss';
 
 type Props = User & {
-  loading: boolean;
+    loading: boolean;
 };
 
 function UserItem(props: Props) {
-  const { Text } = Typography;
-  const [loading, setLoading] = useState(true);
+    const { Text } = Typography;
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 500);
-  }, []);
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 500);
+    }, []);
 
-  const description = [
-    {
-      key: 'Email',
-      value: <Text link={{ href: `mailto:${props.email}` }}>{props.email}</Text>
-    },
-    { key: 'Location', value: props.location }
-  ];
-
-  const placeholder = (
-    <div className='placeholder'>
-      <Skeleton.Avatar className='avatar' />
-      <div>
-        <Skeleton.Title className='title' />
-        <Skeleton.Paragraph className='description' rows={2} />
-      </div>
-    </div>
-  );
-  return (
-    <Skeleton className='skeleton' placeholder={placeholder} loading={loading}>
-      <List.Item
-        className='user'
-        header={<Avatar src={props.profilepicture} />}
-        main={
-          <div className='body'>
-            <div className='title-wrapper'>
-              <span className='name'>{props.name}</span>
-              <span className='date-time-wrapper'>
-                <span className='label'>created on</span>
-                <span className='date-time'>
-                  {format(parseISO(props.createdat), ' HH:mm dd.MM.yyyy')}
-                </span>
-              </span>
-            </div>
-            <div className='description-wrapper'>
-              <Descriptions align='left' data={description} />
-            </div>
-          </div>
+    const description = [
+        {
+            key: 'Email',
+            value: <Text link={{ href: `mailto:${props.email}` }}>{props.email}</Text>
         }
-        extra={
-          <ButtonGroup theme='borderless'>
-            <Button>Edit</Button>
-            <Button type='danger'>X</Button>
-          </ButtonGroup>
-        }
-      />
-    </Skeleton>
-  );
+    ];
+
+    const placeholder = (
+        <div className='placeholder'>
+            <Skeleton.Avatar className='avatar' />
+            <div>
+                <Skeleton.Title className='title' />
+                <Skeleton.Paragraph className='description' rows={2} />
+            </div>
+        </div>
+    );
+    return (
+        <Skeleton className='skeleton' placeholder={placeholder} loading={loading}>
+            <List.Item
+                className='user'
+                header={<Avatar src={props.avatar} />}
+                main={
+                    <div className='body'>
+                        <div className='title-wrapper'>
+                            <span className='name'>{props.fullName}</span>
+                            <span className='date-time-wrapper'>
+                                <span className='label'>created on</span>
+                                <span className='date-time'>{format(parseISO(props.createdAt), ' HH:mm dd.MM.yyyy')}</span>
+                            </span>
+                        </div>
+                        <div className='description-wrapper'>
+                            <Descriptions align='left' data={description} />
+                        </div>
+                    </div>
+                }
+                extra={
+                    <ButtonGroup theme='borderless'>
+                        <Button>Edit</Button>
+                        <Button type='danger'>X</Button>
+                    </ButtonGroup>
+                }
+            />
+        </Skeleton>
+    );
 }
 
 export default UserItem;

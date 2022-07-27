@@ -4,41 +4,49 @@ import _ from 'lodash';
 import Forbidden from '~/components/Forbidden/Forbidden';
 import { LStorage } from '~/storage';
 import { AUTH_TOKEN } from '~/constants';
-import { useAuth } from '~/app/auth';
+import { useSelector } from 'react-redux';
+import { getCurrentUser, isAuthingUser } from '~/features/user';
+import { Spin } from '@douyinfe/semi-ui';
 
 type Props = {
-  component: React.ComponentType;
-  redirectPath?: string;
-  requireRoles?: string[] | [];
+    component: React.ComponentType;
+    redirectPath?: string;
+    requiredRoles?: string[] | [];
 };
 
-const ProtectedRoute: React.FC<Props> = ({
-  component: RouteComponent,
-  redirectPath = '/login',
-  requireRoles = []
-}: Props) => {
-  const auth = useAuth();
+const ProtectedRoute: React.FC<Props> = ({ component: RouteComponent, redirectPath = '/login', requiredRoles = [] }: Props) => {
+    const isAuthing = useSelector(isAuthingUser);
+    const user = useSelector(getCurrentUser);
 
-  const { user } = auth;
-  const isLoggedIn = auth.isLoggedIn || !!LStorage.getItem(AUTH_TOKEN);
+    const location = useLocation();
 
-  // const loggedIn = useSelector(isLoggedIn) || !!LStorage.getItem(AUTH_TOKEN);
-  const location = useLocation();
-
-  const routeRoles = requireRoles.map(role => role.toLowerCase());
-  const userRoles = (user?.Roles ?? []).map(role => role.toLowerCase());
-
-  if (!isLoggedIn) {
-    return <Navigate to={redirectPath} state={{ referrer: location }} />;
-  }
-
-  if (routeRoles.length > 0) {
-    if (_.intersection(routeRoles, userRoles).length === 0) {
-      return <Forbidden />;
+    if (isAuthing) {
+        return (
+            <Spin
+                spinning={true}
+                size='large'
+                style={{
+                    width: '100vw',
+                    height: '100vh',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            />
+        );
     }
-  }
+    const routeRoles = requiredRoles.map(role => role.toLowerCase());
+    const userScopes = (user?.roles ? user.roles : []).map(scope => scope.toLowerCase());
 
-  return <RouteComponent />;
+    if (!user || !LStorage.getItem(AUTH_TOKEN)) {
+        return <Navigate to={redirectPath} state={{ referrer: location }} />;
+    }
+    if (routeRoles.length > 0) {
+        if (_.intersection(routeRoles, userScopes).length === 0) {
+            return <Forbidden />;
+        }
+    }
+    return <RouteComponent />;
 };
 
 export default ProtectedRoute;

@@ -1,19 +1,15 @@
 import React from 'react';
 import { List } from '@douyinfe/semi-ui';
 import UserItem from '~/features/users/UserItem';
-import { useQuery } from 'react-query';
-import { fetchUsers } from '~/services';
+import { getResultsFromInfiniteFetch } from '~/hooks';
+import { useFetchUsersInfinite } from '~/features/users/hooks';
 
 export default function Users() {
-  const { isLoading, error, data } = useQuery('users', () => fetchUsers({ page: 1 }));
+    const { fetching, error, data } = useFetchUsersInfinite();
 
-  return (
-    <div className='list-group'>
-      <List
-        loading={isLoading}
-        dataSource={data}
-        renderItem={item => <UserItem {...item} loading={isLoading} />}
-      />
-    </div>
-  );
+    return (
+        <div className='list-group'>
+            <List loading={fetching} dataSource={data ? getResultsFromInfiniteFetch(data) : []} renderItem={item => <UserItem {...item} loading={fetching} />} />
+        </div>
+    );
 }

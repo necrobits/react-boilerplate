@@ -1,20 +1,8 @@
 import React from 'react';
-import Signup from '~/features/auth/signup';
-import { Card } from '@douyinfe/semi-ui';
+import { Signup } from '~/features/user';
 import './style.scss';
+import AuthLayout from '~/layouts/AuthLayout';
 
 export default function SignupPage() {
-  return (
-    <div className='signup-wrapper'>
-      <Card
-        shadows='always'
-        bodyStyle={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-        <Signup />
-      </Card>
-    </div>
-  );
+    return <AuthLayout title={'React'} hint='Create a new account' body={<Signup />} />;
 }

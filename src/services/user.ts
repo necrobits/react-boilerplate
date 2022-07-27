@@ -1,16 +1,23 @@
 import { User } from '~/models/user';
-import go from '~/app/gobits';
+import Go from '~/global/gobits/gobits';
+import { BaseFilterParams, RequestResponse } from '~/services/index';
 
-export interface UsersFetchInput {
-  page: number;
-}
+export type UsersFetchInput = BaseFilterParams;
 
 export interface UsersResponse {
-  data: User[];
+    data: User[];
 }
 
 export const fetchUsers = (opts: UsersFetchInput) => {
-  return go.get('/users', { query: { ...opts } }).then(res => {
-    return res.body.data;
-  });
+    const params: any = {};
+    if (opts) {
+        Object.keys(opts).forEach(key => {
+            if (opts[key] !== undefined) {
+                params[key] = String(opts[key]);
+            }
+        });
+    }
+    return Go.get<RequestResponse<User>>('/users', { query: { ...params } }).then(res => {
+        return res.body;
+    });
 };

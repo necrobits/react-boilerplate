@@ -1,13 +1,2 @@
-export type {
-  AuthResponse,
-  AuthSignInInput,
-  AuthSignUpInput
-} from '~/services/auth/types';
-export {
-  loadUser,
-  login,
-  loginFn,
-  logoutFn,
-  getUserProfile,
-  registerFn
-} from '~/services/auth/auth';
+export * from './auth';
+export * from './types';

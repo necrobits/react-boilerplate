@@ -1,74 +1,51 @@
 import { LStorage } from '~/storage';
 import { AUTH_TOKEN } from '~/constants';
-import { AuthenticatedUser } from '~/models/user';
-import go from '~/app/gobits';
-import { AuthResponse, AuthSignInInput, AuthSignUpInput } from '~/services';
+import { User } from '~/models/user';
+import Go from '~/global/gobits/gobits';
+import { AuthSignInInput, AuthSignUpInput } from '~/services';
+import { LoginResponse, SignedUpResponse } from './types';
 
-export async function login(opts: AuthSignInInput): Promise<AuthenticatedUser> {
-  return new Promise<AuthenticatedUser>((resolve, reject) => {
-    go.post<AuthResponse>('/authaccount/login', { body: { ...opts } }).then(res => {
-      const body = res.body;
-
-      if (body?.data != null) {
-        console.log(' OK', body.data);
-        resolve(body.data);
-      }
-      console.log('NOT OK');
-      reject(res.body?.message);
+export function login({ email, ...opts }: AuthSignInInput) {
+    return Go.post<NonNullable<LoginResponse>>('/auth/login', {
+        body: { email: email.toLowerCase(), ...opts }
+    }).then(res => {
+        return handleLoginAndSignUpResponse(res);
     });
-  });
 }
 
-export async function register(opts: AuthSignUpInput): Promise<AuthenticatedUser> {
-  return new Promise<AuthenticatedUser>((resolve, reject) => {
-    go.post<AuthResponse>('/authaccount/registration', { body: { ...opts } }).then(
-      res => {
-        // return res.body?.data;
-        const body = res.body;
-
-        if (body?.data != null) {
-          console.log(' OK', body.data);
-          resolve(body.data);
-        }
-        console.log('NOT OK');
-        reject(res.body?.message);
-      }
-    );
-  });
+export function register({ email, ...opts }: AuthSignUpInput) {
+    return Go.post<NonNullable<SignedUpResponse>>('/auth/signup', {
+        body: { email: email.toLowerCase(), ...opts }
+    }).then(res => {
+        return handleLoginAndSignUpResponse(res);
+    });
 }
 
-export async function getUserProfile(): Promise<AuthenticatedUser | undefined> {
-  // return await go.get<AuthResponse>('/auth/me').then(res => res.body?.data);\
-  return undefined;
+export function getUserProfile() {
+    return Go.get<NonNullable<User>>('/auth/me')
+        .then(res => {
+            if (res.status === 200) {
+                return res.body;
+            }
+        })
+        .catch(err => {
+            if (err.statusCode === 401) {
+                LStorage.removeItem(AUTH_TOKEN);
+            }
+        });
 }
 
-function handleUserResponse(user: AuthenticatedUser) {
-  if (user) {
-    LStorage.setItem(AUTH_TOKEN, user.Token);
-  }
-  return user;
+export async function loadUser(): Promise<User | undefined> {
+    let user = undefined;
+    if (LStorage.getItem(AUTH_TOKEN)) {
+        user = await getUserProfile();
+    }
+    return user;
 }
 
-export async function loadUser(): Promise<AuthenticatedUser | undefined> {
-  let user = undefined;
-  if (LStorage.getItem(AUTH_TOKEN)) {
-    user = await getUserProfile();
-  }
-  return user;
-}
-
-export async function loginFn(data: AuthSignInInput): Promise<AuthenticatedUser> {
-  const user = await login(data);
-  await handleUserResponse(user);
-  return user;
-}
-
-export async function registerFn(data: AuthSignUpInput): Promise<AuthenticatedUser> {
-  const user = await register(data);
-  await handleUserResponse(user);
-  return user;
-}
-
-export async function logoutFn() {
-  await LStorage.removeItem(AUTH_TOKEN);
-}
+const handleLoginAndSignUpResponse = res => {
+    if (res.body && res.body.token) {
+        LStorage.setItem(AUTH_TOKEN, res.body.token);
+    }
+    return res.body.user;
+};
