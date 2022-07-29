@@ -1,8 +1,7 @@
-import { InfiniteData, useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
+import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
 import { TQueryKey } from './types';
 import { ErrorResponse, RequestResponse } from '~/services';
 import { useEffect, useState } from 'react';
-import _ from 'lodash';
 
 export function useAutoLoadInfinite<T, Input>(
     serviceFunc: (input?: Input) => Promise<RequestResponse<T>>,
@@ -52,15 +51,4 @@ export function useAutoLoadInfinite<T, Input>(
     }, [isFetchingNextPage, hasNextPage]);
 
     return { fetchNextPage, hasNextPage, isFetchingNextPage, fetching, ...rest };
-}
-
-export function getResultsFromInfiniteFetch<T>(data: InfiniteData<RequestResponse<T>> | undefined): T[] {
-    if (!data) {
-        return [];
-    }
-    return _.flatten(
-        data.pages.map(page => {
-            return page.results;
-        })
-    );
 }

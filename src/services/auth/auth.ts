@@ -1,7 +1,7 @@
 import { LStorage } from '~/storage';
 import { AUTH_TOKEN } from '~/constants';
 import { User } from '~/models/user';
-import Go from '~/global/gobits/gobits';
+import Go from '~/global/gobits';
 import { AuthSignInInput, AuthSignUpInput } from '~/services';
 import { LoginResponse, SignedUpResponse } from './types';
 

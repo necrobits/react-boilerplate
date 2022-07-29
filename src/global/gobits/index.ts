@@ -1,2 +1,3 @@
-export * from './gobits';
-export * from './middlewares';
+import Go from './gobits';
+
+export default Go;

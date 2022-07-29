@@ -1,5 +1,5 @@
 import { User } from '~/models/user';
-import Go from '~/global/gobits/gobits';
+import Go from '~/global/gobits';
 import { BaseFilterParams, RequestResponse } from '~/services/index';
 
 export type UsersFetchInput = BaseFilterParams;

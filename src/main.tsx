@@ -6,8 +6,8 @@ import { store } from '~/global/store';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
-import Go from '~/global/gobits/gobits';
-import { handleResponse, simpleAuth } from '~/global/gobits';
+import Go from '~/global/gobits';
+import { handleResponse, simpleAuth } from '~/global/gobits/middlewares';
 import { LocaleProvider } from '@douyinfe/semi-ui';
 import { BrowserRouter } from 'react-router-dom';
 

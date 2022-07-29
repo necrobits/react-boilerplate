@@ -25,9 +25,9 @@ This template also uses Protected Route plus Authentication and Public Route in 
 
 **Libraries**:
 
-- React & Typescript
-- Redux
-- Redux Saga
+-   React & Typescript
+-   Redux
+-   Redux Saga
 
 **Tooling**: Vite  
 **UI Kit**: Semi Design, Iconsax
