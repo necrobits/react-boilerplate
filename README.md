@@ -8,8 +8,7 @@
 ![TypeScript](https://img.shields.io/badge/-TypeScript%20^4.3.2-blue?logo=typescript&logoColor=white)
 ![Redux](https://img.shields.io/badge/-Redux%20^4.1.2-white?logo=redux&logoColor=646cff)
 ![ReduxSaga](https://img.shields.io/badge/-Redux%20Saga%20^1.1.3-yellowgreen?logo=reduxsaga&logoColor=white)
-![SemiUI](https://img.shields.io/badge/-Semi%20UI%20^2.1.5-important?logo=semiui)
-![ReactIconsaxIcons](https://img.shields.io/badge/-React%20Iconsax%20Icons%20^1.0.1-inactive?logo=iconsax)
+![SemiUI](https://img.shields.io/badge/-Semi%20UI%20^2.15.1-important?logo=semiui)
 
 </p>
 
@@ -30,7 +29,7 @@ This template also uses Protected Route plus Authentication and Public Route in 
 -   Redux Saga
 
 **Tooling**: Vite  
-**UI Kit**: Semi Design, Iconsax
+**UI Kit**: Semi Design
 
 ## Development
 
@@ -52,7 +51,7 @@ git commit -m "Initial commit"
 Install dependencies:
 
 ```
-npm i
+yarn install
 ```
 
 Now, you can start a local web server by running:
