@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, ButtonGroup, Descriptions, List, Skeleton, Typography } from '@douyinfe/semi-ui';
-import { format, parseISO } from 'date-fns';
 
 import { User } from '~/models/user';
 import './Useritem.scss';
+import { TimeManager } from '~/utils';
 
 type Props = User & {
     loading: boolean;
 };
 
-function UserItem(props: Props) {
+function UserItem({ ...props }: Props) {
     const { Text } = Typography;
     const [loading, setLoading] = useState(true);
 
@@ -41,10 +41,10 @@ function UserItem(props: Props) {
                 main={
                     <div className='body'>
                         <div className='title-wrapper'>
-                            <span className='name'>{props.fullName}</span>
+                            <span className='name'>{User.getFullName(props)}</span>
                             <span className='date-time-wrapper'>
                                 <span className='label'>created on</span>
-                                <span className='date-time'>{format(parseISO(props.createdAt), ' HH:mm dd.MM.yyyy')}</span>
+                                <span className='date-time'>{TimeManager.formatFromISO(props.createdAt, ' HH:mm dd.MM.yyyy')}</span>
                             </span>
                         </div>
                         <div className='description-wrapper'>

@@ -6,15 +6,15 @@ import { AuthSignInInput, AuthSignUpInput } from '~/services';
 import { LoginResponse, SignedUpResponse } from './types';
 
 export function login({ email, ...opts }: AuthSignInInput) {
-    return Go.post<NonNullable<LoginResponse>>('/auth/login', {
-        body: { email: email.toLowerCase(), ...opts }
+    return Go.post<NonNullable<LoginResponse>>('/authaccount/registration', {
+        body: { username: email.toLowerCase(), ...opts }
     }).then(res => {
         return handleLoginAndSignUpResponse(res);
     });
 }
 
 export function register({ email, ...opts }: AuthSignUpInput) {
-    return Go.post<NonNullable<SignedUpResponse>>('/auth/signup', {
+    return Go.post<NonNullable<SignedUpResponse>>('/authaccount/login', {
         body: { email: email.toLowerCase(), ...opts }
     }).then(res => {
         return handleLoginAndSignUpResponse(res);

@@ -17,7 +17,7 @@ export default function Signup() {
     const onSubmit = (values: Record<string, any>) => {
         const { email, password, first_name, last_name } = values;
         register(
-            { email, password, firstName: first_name, lastName: last_name },
+            { email, password, name: `${first_name} ${last_name}` },
             {
                 onSuccess: user => {
                     dispatch(fetchedUser(user));

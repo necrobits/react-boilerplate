@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import { join, resolve } from 'path';
+import SemiPlugin from '@necrobits/vite-plugin-semi-theme';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,6 +9,12 @@ export default defineConfig({
         reactRefresh({
             include: ['**/*.tsx'],
             exclude: [/\.stories\.(t|j)sx?$/, /node_modules/]
+        }),
+        SemiPlugin({
+            theme: '@semi-bot/semi-theme-nyx-c',
+            options: {
+                include: resolve(__dirname, 'assets/scss/local.scss')
+            }
         })
     ],
     cacheDir: 'node_modules/.vite',
@@ -15,13 +22,6 @@ export default defineConfig({
         alias: {
             '~': join(__dirname, 'src'),
             assets: resolve(__dirname, 'assets')
-        }
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: '@import "assets/scss/local.scss";'
-            }
         }
     },
     build: {

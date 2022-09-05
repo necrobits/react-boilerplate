@@ -53,7 +53,7 @@ export const routes: IRoute[] = [
         ]
     },
     {
-        path: '*',
+        path: '**',
         component: () => <Navigate to='example' />
     }
 ];

@@ -18,62 +18,6 @@ const DefaultPage: FC = ({ children }): JSX.Element => {
         });
         setToastIds([...toastIds, id]);
     };
-    // const memorizedSyncLog = useCallback(handleError, []);
-    // useEffect(() => {
-    //   console.log('toastids change', toastIds);
-    // }, [toastIds]);
-    // useEffect(() => {
-    //   async function sendLogWhenOnline() {
-    //     const getLogFromStorage = LStorage.getItem(ERROR_LOG, null);
-    //     if (getLogFromStorage) {
-    //       memorizedSyncLog();
-    //     }
-    //   }
-    //
-    //   sendLogWhenOnline();
-    //
-    //   window.onerror = async (message, _, __, ___, errorObj) => {
-    //     memorizedSyncLog(message, errorObj?.stack);
-    //   };
-    //
-    //   return () => {
-    //     window.onerror = null;
-    //   };
-    // }, [memorizedSyncLog]);
-
-    // <Modal
-    //   onCancel={resetErrorBoundary}
-    //   centered
-    //   visible
-    //   footer={
-    //     <div style={{ textAlign: 'center' }}>
-    //       <Button type='primary' theme='solid' onClick={resetErrorBoundary}>
-    //         OK
-    //       </Button>
-    //     </div>
-    //   }>
-    //   <h3 style={{ textAlign: 'center', fontSize: 24, margin: 40 }}>Error</h3>
-    //   <div>{error.message}</div>
-    // </Modal>;
-
-    // function ErrorFallbackUI({ error, resetErrorBoundary }: FallbackProps) {
-    //   const destroy = (toastId: string) => {
-    //     console.log('destroy', toastId);
-    //     if (toastId && toastId.length > 0) {
-    //       const toastIdx = toastIds.indexOf(toastId);
-    //       if (toastIdx > -1) {
-    //         console.log('id', toastIdx);
-    //         setToastIds(toastIds.filter(id => toastId !== id));
-    //         errors.splice(toastIdx, 1);
-    //         setErrors(errors);
-    //       }
-    //
-    //       Toast.close(toastId);
-    //     }
-    //   };
-    //
-    //   return <></>;
-    // }
 
     return (
         <ErrorBoundary fallbackRender={() => <div>Oh no</div>} resetKeys={[boundaryKey]} onError={handleError}>
