@@ -2,8 +2,23 @@
     "compilerOptions": {
         "target": "ESNext",
         "useDefineForClassFields": true,
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "types": ["vite/client", "node", "chrome"],
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ESNext"
+        ],
+        "types": [
+            "vite/client",
+            "node",
+            "chrome",
+            "jest"
+        ],
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types"
+        ],
+        "incremental": true,
+        "removeComments": true,
         "allowJs": true,
         "skipLibCheck": true,
         "esModuleInterop": true,
@@ -19,13 +34,28 @@
         "noImplicitAny": false,
         "baseUrl": ".",
         "paths": {
-            "~/*": ["src/*"],
-            "assets/*": ["assets/*"],
-            "locales/*": ["locales/*"]
+            "~/*": [
+                "src/*"
+            ],
+            "assets/*": [
+                "assets/*"
+            ],
+            "locales/*": [
+                "locales/*"
+            ],
+            "fonts/*": [
+                "fonts/*"
+            ]
         },
         "noUnusedLocals": false,
         "noUnusedParameters": false
     },
     "include": ["./src"],
-    "exclude": ["**/node_modules/*", "build"]
+    "exclude": [
+        "**/node_modules/*",
+        "build",
+        "dist",
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }

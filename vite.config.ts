@@ -1,41 +1,52 @@
-import { defineConfig } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
-import { join, resolve } from 'path';
+import { defineConfig, UserConfigExport } from 'vite';
+import reactRefresh from '@vitejs/plugin-react';
+import { resolve } from 'path';
 import SemiPlugin from '@necrobits/vite-plugin-semi-theme';
+import type { UserConfig } from 'vitest/config';
 
-// https://vitejs.dev/config/
-export default defineConfig({
+type myViteConfig = UserConfigExport & UserConfig;
+
+const myConfig: myViteConfig = {
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: './src/test/vite/setup.ts',
+        coverage: {
+            reporter: ['text', 'json', 'html']
+        }
+        // deps: {
+        //     inline: ['compute-scroll-into-view', 'echarts']
+        // }
+    },
     plugins: [
         reactRefresh({
-            include: ['**/*.tsx'],
-            exclude: [/\.stories\.(t|j)sx?$/, /node_modules/]
+            // jsxRuntime: 'classic',
+            include: [/node_modules/, '**/*.tsx', '**/*.ts', '**/assets/*/*.scss', '**/locales/*/*.json'],
+            exclude: [/\.stories\.(t|j)sx?$/, /node_modules/, '*.css']
+            // Only .tsx files
         }),
         SemiPlugin({
-            theme: '@semi-bot/semi-theme-nyx-c',
-            options: {
-                include: resolve(__dirname, 'assets/scss/local.scss')
-            }
+            theme: '@semi-bot/semi-theme-nyx-c'
         })
+        // typescript({
+        //     tsconfig: resolve(__dirname, 'tsconfig.json'),
+        //     typescript: ttsc
+        // })
     ],
-    cacheDir: 'node_modules/.vite',
+    assetsInclude: ['**/fonts/NotoSans-Regular.woff'],
     resolve: {
         alias: {
-            '~': join(__dirname, 'src'),
-            assets: resolve(__dirname, 'assets')
-        }
+            '~': resolve(__dirname, 'src'),
+            assets: resolve(__dirname, 'assets'),
+            locales: resolve(__dirname, 'locales'),
+            fonts: resolve(__dirname, 'fonts')
+        },
+        mainFields: ['module', 'jsnext:main', 'jsnext']
     },
     build: {
         outDir: 'build',
-        rollupOptions: {
-            external: ['react'],
-            output: {
-                format: 'esm',
-                manualChunks: id => {
-                    if (id.includes('node_modules')) {
-                        return 'vendor'; // all other package goes here
-                    }
-                }
-            }
-        }
+        chunkSizeWarningLimit: 600
     }
-});
+};
+// noinspection JSUnusedGlobalSymbols
+export default defineConfig(myConfig);

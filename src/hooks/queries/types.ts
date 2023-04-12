@@ -1,1 +1,1 @@
-export type TQueryKey = [string, ...(string | object | undefined)[]] | string;
+export type TQueryKey = [string, ...(string | object | undefined)[]];

@@ -1,0 +1,27 @@
+.base-table {
+    .semi-table-placeholder {
+        padding: 0;
+        border-bottom: none;
+    }
+
+    .semi-table-pagination-outer {
+        margin-top: 10px;
+        padding-left: 14px;
+        min-height: 50px;
+
+        .semi-page {
+            .semi-page-item-active {
+                background-color: var(--semi-color-bg-1);
+                color: #333;
+            }
+        }
+    }
+
+    .semi-table-wrapper {
+        .semi-spin-hidden {
+            .semi-spin-children {
+                opacity: 1;
+            }
+        }
+    }
+}

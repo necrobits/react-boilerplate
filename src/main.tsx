@@ -1,32 +1,36 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import '~/index.scss';
-import App from '~/App';
-import { store } from '~/global/store';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
-import Go from '~/global/gobits';
-import { handleResponse, simpleAuth } from '~/global/gobits/middlewares';
-import { LocaleProvider } from '@douyinfe/semi-ui';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 
+import '~/global/gobits';
+import i18n from '~/global/i18n';
+import { store } from '~/global/store';
+
+import Config from '~/config';
+import { LanguageProvider, TimeManagerProvider } from '~/context';
+import App from '~/App';
+import '~/index.scss';
+
 const queryClient = new QueryClient();
+const element = document.getElementById('root');
+const root = createRoot(element!);
 
-Go.use(simpleAuth);
-Go.use(handleResponse);
-
-ReactDOM.render(
-    <React.StrictMode>
+i18n.on('initialized', () => {
+    root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <QueryClientProvider client={queryClient}>
-                    <LocaleProvider locale={en_GB}>
-                        <App />
-                    </LocaleProvider>
+                    <LanguageProvider>
+                        <TimeManagerProvider>
+                            <App />
+                        </TimeManagerProvider>
+                    </LanguageProvider>
+                    <ReactQueryDevtools initialIsOpen={Config.isDev} />
                 </QueryClientProvider>
             </BrowserRouter>
         </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+    );
+});

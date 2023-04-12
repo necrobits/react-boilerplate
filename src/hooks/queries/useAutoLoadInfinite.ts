@@ -1,7 +1,7 @@
-import { useInfiniteQuery, UseInfiniteQueryOptions } from 'react-query';
-import { TQueryKey } from './types';
-import { ErrorResponse, RequestResponse } from '~/services';
+import { useInfiniteQuery, UseInfiniteQueryOptions, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { ErrorResponse, RequestResponse } from '~/services';
+import { TQueryKey } from './types';
 
 export function useAutoLoadInfinite<T, Input>(
     serviceFunc: (input?: Input) => Promise<RequestResponse<T>>,
@@ -9,7 +9,8 @@ export function useAutoLoadInfinite<T, Input>(
     params?: Input,
     config?: UseInfiniteQueryOptions<RequestResponse<T>, ErrorResponse, RequestResponse<T>>
 ) {
-    const [fetching, setFetching] = useState(true);
+    const [fetching, setFetching] = useState(config?.enabled != undefined ? config.enabled : true);
+    const queryClient = useQueryClient();
 
     let onError;
     if (config) {
@@ -19,10 +20,16 @@ export function useAutoLoadInfinite<T, Input>(
         config = {};
     }
 
-    const { fetchNextPage, hasNextPage, isFetchingNextPage, ...rest } = useInfiniteQuery<RequestResponse<T>, Error, RequestResponse<T>, TQueryKey>(
-        [key, params as any],
-        ({ pageParam }) => {
-            return serviceFunc({ ...params, page: pageParam } as Input);
+    useEffect(() => {
+        return () => {
+            queryClient.cancelQueries({ queryKey: [key, params as unknown as object] });
+        };
+    }, []);
+
+    const { fetchNextPage, hasNextPage, isFetchingNextPage, remove, ...rest } = useInfiniteQuery<RequestResponse<T>, Error, RequestResponse<T>, TQueryKey>(
+        [key, params as unknown as object],
+        ({ pageParam = 1, signal }) => {
+            return serviceFunc({ ...params, page: pageParam, signal } as Input);
         },
         {
             ...config,

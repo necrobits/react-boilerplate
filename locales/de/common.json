@@ -1,0 +1,49 @@
+{
+    "appTitle": "Necrobits",
+    "signin": "Sign in",
+    "signup": "Create a new account",
+    "requestResetPassword": "Request reset your password",
+    "resetPassword": "Reset your password",
+    "errors": {
+        "required": "{{text}} is required",
+        "valid": "{{text}} is not valid"
+    },
+    "user": {
+        "title": "User",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "oldPassword": "Old password",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password",
+        "avatar": "Avatar"
+    },
+    "sortBy": {
+        "title": "Sort by",
+        "options": {
+            "month": "Month",
+            "week": "Week",
+            "project": "Project",
+            "user": "People"
+        }
+    },
+    "filterBy": {
+        "title": "Filter by",
+        "options": {
+            "me": "My pending",
+            "everyone": "Awaiting my approval",
+            "incomplete": "Incomplete",
+            "no-timesheet": "No timesheet"
+        }
+    },
+    "welcomeOnboard": "Your registration is completed",
+    "redirectCountdown": "You will be redirected in",
+    "countdownUnit": "seconds",
+    "error": "An error occurred",
+    "required": "verpflichtend",
+    "optional": "optional",
+    "hidden": "versteckt",
+    "disabled": "disabled"
+}

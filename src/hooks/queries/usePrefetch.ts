@@ -1,6 +1,6 @@
-import { useQueryClient } from 'react-query';
-import { TQueryKey } from './types';
+import { useQueryClient } from '@tanstack/react-query';
 import { ErrorResponse } from '~/services';
+import { TQueryKey } from './types';
 
 export async function usePrefetch<Res, Selector = Res>(func: () => Promise<Res>, key: TQueryKey) {
     const queryClient = useQueryClient();

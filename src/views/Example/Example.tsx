@@ -1,5 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { SectionTitle } from '../../components/typography';
 
 export default function Example() {
-    return <h1>This is an example page</h1>;
+    const { t } = useTranslation('example');
+    return <SectionTitle>{t('title')}</SectionTitle>;
 }
